@@ -1,0 +1,15 @@
+name: foldbench
+channels:
+  - conda-forge
+  - aivant
+dependencies:
+  - python=3.9.*
+  - aivant::openstructure=2.8.0
+  - pip:
+    - scipy
+    - networkx
+    - pandas
+    - numpy
+    - biopython==1.85
+    - tqdm
+    - parallelbar
