@@ -1,0 +1,149 @@
+[
+    {
+        "name": "8tuz-assembly1",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "EVQLVQSGEEVKKPGESLKISCKGSGYKFSSYWIGWVRQMPGKGLEWMGIIFPGDSDKRYSPSFQGQVTISADKSISTVYLQWSSLKASDTAMYYCARHITTHTYRGFFDFWGQGTLVTVSSASTKGPSVFPLAPSSKSTSGGTAALGCLVKDYFPEPVTVSWNSGALTSGVHTFPAVLQSSGLYSLSSVVTVPSSSLGTQTYICNVNHKPSNTKVDKRVEPK",
+                    "count": 1,
+                    "modifications": [],
+                    "msa": {
+                        "precomputed_msa_dir": "/algo/outputs/prediction/Protenix/msa_seq_0/0",
+                        "pairing_db": "uniref100"
+                    }
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "QLTQSPSSLSASVGDRVTITCRASQDISSALAWYQQKPGKAPKLLIYDVSSLESGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQFNGYPHRLTFGGGTKVEIKRTVAAPSVFIFPPSDEQLKSGTASVVCLLNNFYPREAKVQWKVDNALQSGNSQESVTEQDSKDSTYSLSSTLTLSKADYEKHKVYACEVTHQGLSSPVTKSFNRGE",
+                    "count": 1,
+                    "modifications": [],
+                    "msa": {
+                        "precomputed_msa_dir": "/algo/outputs/prediction/Protenix/msa_seq_0/1",
+                        "pairing_db": "uniref100"
+                    }
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "SLDEKNSVSVDLPGEMKVLVSKEKNKDGKYDLIATVDKLELKGTSDKNNGSGVLEGVKADKSKVKLTISDDLGQTTLEVFKEDGKTLVSKKVTSKDKSSTEEKFNEKGEVSEKIITRADGTRLEYTGIKSDGSGKAKEVLKGYVLEGTLTAEKTTLVVKEGTVTLSKNISKSGEVSVELNDTDSSAATKKTAAWNSGTSTLTITVNSKKTKDLVFTKENTITVQQYDSNGTKLEGSAVEITKLDEIKNALK",
+                    "count": 1,
+                    "modifications": [],
+                    "msa": {
+                        "precomputed_msa_dir": "/algo/outputs/prediction/Protenix/msa_seq_0/2",
+                        "pairing_db": "uniref100"
+                    }
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_EDO",
+                    "count": 6
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_CL",
+                    "count": 7
+                }
+            }
+        ]
+    },
+    {
+        "name": "7fwf-assembly1",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "GSHMCDAFVGTWKLVSSENFDDYMKELGVGFATRKMGGMAKPNCIISVNGDVITIKTESTLKNTEISFILGQEFDEVTADDRKVKSTITLDGGVLVQVQKWDGKSTTIKRKREDDKLVVECVMKGVTCTRVYERA",
+                    "count": 1,
+                    "modifications": [],
+                    "msa": {
+                        "precomputed_msa_dir": "/algo/outputs/prediction/Protenix/msa_seq_1/0",
+                        "pairing_db": "uniref100"
+                    }
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_DMS",
+                    "count": 3
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_MQF",
+                    "count": 1
+                }
+            }
+        ]
+    },
+    {
+        "name": "5sbj-assembly1",
+        "sequences": [
+            {
+                "proteinChain": {
+                    "sequence": "XYCSDCGADASQVRGGYCTNCGASADRIRX",
+                    "count": 1,
+                    "modifications": [
+                        {
+                            "ptmType": "CCD_ACE",
+                            "ptmPosition": 1
+                        },
+                        {
+                            "ptmType": "CCD_AIB",
+                            "ptmPosition": 10
+                        },
+                        {
+                            "ptmType": "CCD_AIB",
+                            "ptmPosition": 25
+                        },
+                        {
+                            "ptmType": "CCD_NH2",
+                            "ptmPosition": 30
+                        }
+                    ],
+                    "msa": {
+                        "precomputed_msa_dir": "/algo/outputs/prediction/Protenix/msa_seq_2/0",
+                        "pairing_db": "uniref100"
+                    }
+                }
+            },
+            {
+                "ligand": {
+                    "ligand": "CCD_CD",
+                    "count": 1
+                }
+            }
+        ]
+    },
+    {
+        "name": "8e3r-assembly1",
+        "sequences": [
+            {
+                "dnaSequence": {
+                    "sequence": "AATAAAAGGAAGTGGG",
+                    "count": 1,
+                    "modifications": []
+                }
+            },
+            {
+                "dnaSequence": {
+                    "sequence": "TCCCACTTCCTTTTAT",
+                    "count": 1,
+                    "modifications": []
+                }
+            },
+            {
+                "proteinChain": {
+                    "sequence": "GSKKKIRLYQFLLDLLRSGDMKDSIWWVDKDKGTFQFSSKHKEALAHRWGIQKGNRKKMTYQKMARALRNYGKTGEVKKVKKKLTYQFSGEVLGRGGLAERRHPPH",
+                    "count": 1,
+                    "modifications": [],
+                    "msa": {
+                        "precomputed_msa_dir": "/algo/outputs/prediction/Protenix/msa_seq_3/0",
+                        "pairing_db": "uniref100"
+                    }
+                }
+            }
+        ]
+    }
+]

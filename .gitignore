@@ -1,0 +1,9 @@
+*.pyc
+__pycache__/
+*.sif
+*.ninja_deps
+*.ninja
+*.ninja_deps
+*.ninja_deps.d
+*.ninja_deps.d.tmp
+*.ninja_deps.d.tmp.d

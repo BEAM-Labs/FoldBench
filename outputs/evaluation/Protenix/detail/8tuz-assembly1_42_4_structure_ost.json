@@ -1,0 +1,175 @@
+{
+    "reference_chains": [
+        "A",
+        "B",
+        "C"
+    ],
+    "model_chains": [
+        "A0",
+        "B0",
+        "C0"
+    ],
+    "chem_groups": [
+        [
+            "A"
+        ],
+        [
+            "B"
+        ],
+        [
+            "C"
+        ]
+    ],
+    "chem_mapping": [
+        [
+            "A0"
+        ],
+        [
+            "B0"
+        ],
+        [
+            "C0"
+        ]
+    ],
+    "chain_mapping": {
+        "A": "A0",
+        "B": "B0",
+        "C": "C0"
+    },
+    "aln": [
+        ">reference:A\nEVQLVQSGEEVKKPGESLKISCKGSGYKFSSYWIGWVRQMPGKGLEWMGIIFPGDSDKRYSPSFQGQVTISADKSISTVYLQWSSLKASDTAMYYCARHITTHTYRGFFDFWGQGTLVTVSSASTKGPSVFPLAP---STSGGTAALGCLVKDYFPEPVTVSWNSGALTSGVHTFPAVLQSSGLYSLSSVVTVPSSSLGTQTYICNVNHKPSNTKVDKRVEPK\n>model:A0\nEVQLVQSGEEVKKPGESLKISCKGSGYKFSSYWIGWVRQMPGKGLEWMGIIFPGDSDKRYSPSFQGQVTISADKSISTVYLQWSSLKASDTAMYYCARHITTHTYRGFFDFWGQGTLVTVSSASTKGPSVFPLAPSSKSTSGGTAALGCLVKDYFPEPVTVSWNSGALTSGVHTFPAVLQSSGLYSLSSVVTVPSSSLGTQTYICNVNHKPSNTKVDKRVEPK",
+        ">reference:B\nQLTQSPSSLSASVGDRVTITCRASQDISSALAWYQQKPGKAPKLLIYDVSSLESGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQFNGYPHRLTFGGGTKVEIKRTVAAPSVFIFPPSDEQLKSGTASVVCLLNNFYPREAKVQWKVDNALQSGNSQESVTEQDSKDSTYSLSSTLTLSKADYEKHKVYACEVTHQGLSSPVTKSFNRGE\n>model:B0\nQLTQSPSSLSASVGDRVTITCRASQDISSALAWYQQKPGKAPKLLIYDVSSLESGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQFNGYPHRLTFGGGTKVEIKRTVAAPSVFIFPPSDEQLKSGTASVVCLLNNFYPREAKVQWKVDNALQSGNSQESVTEQDSKDSTYSLSSTLTLSKADYEKHKVYACEVTHQGLSSPVTKSFNRGE",
+        ">reference:C\nSLDEKNSVSVDLPGEMKVLVSKEKNKDGKYDLIATVDKLELKGTSDKNNGSGVLEGVKADKSKVKLTISDDLGQTTLEVFKEDGKTLVSKKVTSKDKSSTEEKFNEKGEVSEKIITRADGTRLEYTGIKSDGSGKAKEVLKGYVLEGTLTAEKTTLVVKEGTVTLSKNISKSGEVSVELNDTDSSAATKKTAAWNSGTSTLTITVNSKKTKDLVFTKENTITVQQYDSNGTKLEGSAVEITKLDEIKNALK\n>model:C0\nSLDEKNSVSVDLPGEMKVLVSKEKNKDGKYDLIATVDKLELKGTSDKNNGSGVLEGVKADKSKVKLTISDDLGQTTLEVFKEDGKTLVSKKVTSKDKSSTEEKFNEKGEVSEKIITRADGTRLEYTGIKSDGSGKAKEVLKGYVLEGTLTAEKTTLVVKEGTVTLSKNISKSGEVSVELNDTDSSAATKKTAAWNSGTSTLTITVNSKKTKDLVFTKENTITVQQYDSNGTKLEGSAVEITKLDEIKNALK"
+    ],
+    "inconsistent_residues": [],
+    "lddt": 0.909,
+    "model_clashes": [],
+    "model_bad_bonds": [],
+    "model_bad_angles": [],
+    "reference_clashes": [],
+    "reference_bad_bonds": [],
+    "reference_bad_angles": [],
+    "dockq_reference_interfaces": [
+        [
+            "A",
+            "B"
+        ],
+        [
+            "A",
+            "C"
+        ],
+        [
+            "B",
+            "C"
+        ]
+    ],
+    "dockq_interfaces": [
+        [
+            "A",
+            "B",
+            "A0",
+            "B0"
+        ],
+        [
+            "A",
+            "C",
+            "A0",
+            "C0"
+        ],
+        [
+            "B",
+            "C",
+            "B0",
+            "C0"
+        ]
+    ],
+    "dockq": [
+        0.834,
+        0.492,
+        0.457
+    ],
+    "fnat": [
+        0.863,
+        0.556,
+        0.8
+    ],
+    "fnonnat": [
+        0.183,
+        0.5,
+        0.5
+    ],
+    "irmsd": [
+        1.091,
+        1.359,
+        2.203
+    ],
+    "lrmsd": [
+        1.06,
+        11.086,
+        14.521
+    ],
+    "nnat": [
+        124,
+        36,
+        5
+    ],
+    "nmdl": [
+        131,
+        40,
+        8
+    ],
+    "dockq_ave": 0.594,
+    "dockq_wave": 0.748,
+    "dockq_ave_full": 0.594,
+    "dockq_wave_full": 0.748,
+    "oligo_gdtts": 0.73,
+    "oligo_gdtha": 0.557,
+    "rmsd": 4.046,
+    "transform": [
+        [
+            0.3775826692581177,
+            0.13575580716133118,
+            -0.9159703254699707,
+            49.93475341796875
+        ],
+        [
+            0.33293837308883667,
+            -0.9429453611373901,
+            -0.002509385347366333,
+            19.835298538208008
+        ],
+        [
+            -0.8640506267547607,
+            -0.3040141463279724,
+            -0.4012380540370941,
+            51.64837646484375
+        ],
+        [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+        ]
+    ],
+    "tm_score": 0.879,
+    "usalign_mapping": {
+        "A": "A0",
+        "B": "B0",
+        "C": "C0"
+    },
+    "model": "./outputs/prediction/Protenix/8tuz-assembly1/seed_42/predictions/8tuz-assembly1_seed_42_sample_4_postprocessed.cif",
+    "reference": "./ground_truths/8tuz-assembly1.cif",
+    "fault_tolerant": true,
+    "model_biounit": null,
+    "reference_biounit": null,
+    "residue_number_alignment": false,
+    "enforce_consistency": false,
+    "cad_exec": null,
+    "usalign_exec": null,
+    "lddt_no_stereochecks": false,
+    "min_pep_length": 4,
+    "min_nuc_length": 4,
+    "lddt_add_mdl_contacts": false,
+    "dockq_capri_peptide": false,
+    "status": "SUCCESS"
+}

@@ -1,0 +1,93 @@
+{
+    "reference_chains": [
+        "A"
+    ],
+    "model_chains": [
+        "A0"
+    ],
+    "chem_groups": [
+        [
+            "A"
+        ]
+    ],
+    "chem_mapping": [
+        [
+            "A0"
+        ]
+    ],
+    "chain_mapping": {
+        "A": "A0"
+    },
+    "aln": [
+        ">reference:A\nYCSDCGADASQVRGGYCTNCGASADRIR\n>model:A0\nYCSDCGADASQVRGGYCTNCGASADRIR"
+    ],
+    "inconsistent_residues": [],
+    "lddt": 0.767,
+    "model_clashes": [],
+    "model_bad_bonds": [],
+    "model_bad_angles": [],
+    "reference_clashes": [],
+    "reference_bad_bonds": [],
+    "reference_bad_angles": [],
+    "dockq_reference_interfaces": [],
+    "dockq_interfaces": [],
+    "dockq": [],
+    "fnat": [],
+    "fnonnat": [],
+    "irmsd": [],
+    "lrmsd": [],
+    "nnat": [],
+    "nmdl": [],
+    "dockq_ave": 0.0,
+    "dockq_wave": 0.0,
+    "dockq_ave_full": 0.0,
+    "dockq_wave_full": 0.0,
+    "oligo_gdtts": 0.848,
+    "oligo_gdtha": 0.688,
+    "rmsd": 1.63,
+    "transform": [
+        [
+            -0.49059489369392395,
+            0.3362000584602356,
+            0.8039190769195557,
+            10.56798267364502
+        ],
+        [
+            0.7688758373260498,
+            0.6011582612991333,
+            0.21780425310134888,
+            8.89470100402832
+        ],
+        [
+            -0.4100569188594818,
+            0.7249677181243896,
+            -0.5534212589263916,
+            13.16120433807373
+        ],
+        [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+        ]
+    ],
+    "tm_score": 0.569,
+    "usalign_mapping": {
+        "A": "A0"
+    },
+    "model": "./outputs/prediction/Protenix/5sbj-assembly1/seed_42/predictions/5sbj-assembly1_seed_42_sample_3_postprocessed.cif",
+    "reference": "./ground_truths/5sbj-assembly1.cif",
+    "fault_tolerant": true,
+    "model_biounit": null,
+    "reference_biounit": null,
+    "residue_number_alignment": false,
+    "enforce_consistency": false,
+    "cad_exec": null,
+    "usalign_exec": null,
+    "lddt_no_stereochecks": false,
+    "min_pep_length": 4,
+    "min_nuc_length": 4,
+    "lddt_add_mdl_contacts": false,
+    "dockq_capri_peptide": false,
+    "status": "SUCCESS"
+}

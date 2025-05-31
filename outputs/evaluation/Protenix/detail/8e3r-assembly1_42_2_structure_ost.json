@@ -1,0 +1,136 @@
+{
+    "reference_chains": [
+        "A",
+        "B",
+        "C"
+    ],
+    "model_chains": [
+        "A0",
+        "B0",
+        "C0"
+    ],
+    "chem_groups": [
+        [
+            "C"
+        ],
+        [
+            "A",
+            "B"
+        ]
+    ],
+    "chem_mapping": [
+        [
+            "C0"
+        ],
+        [
+            "A0",
+            "B0"
+        ]
+    ],
+    "chain_mapping": {
+        "C": "C0",
+        "A": "A0",
+        "B": "B0"
+    },
+    "aln": [
+        ">reference:C\n----KIRLYQFLLDLLRSGDMKDSIWWVDKDKGTFQFSSKHKEALAHRWGIQKGNRKKMTYQKMARALRNYGKTGEVKKVKKKLTYQFSGEVLGR-----------\n>model:C0\nGSKKKIRLYQFLLDLLRSGDMKDSIWWVDKDKGTFQFSSKHKEALAHRWGIQKGNRKKMTYQKMARALRNYGKTGEVKKVKKKLTYQFSGEVLGRGGLAERRHPPH",
+        ">reference:A\nAATAAAAGGAAGTGGG\n>model:A0\nAATAAAAGGAAGTGGG",
+        ">reference:B\nTCCCACTTCCTTTTAT\n>model:B0\nTCCCACTTCCTTTTAT"
+    ],
+    "inconsistent_residues": [],
+    "lddt": 0.89,
+    "model_clashes": [],
+    "model_bad_bonds": [],
+    "model_bad_angles": [
+        {
+            "a1": "B0.1..OP3",
+            "a2": "B0.1..P",
+            "a3": "B0.1..OP1",
+            "angle": 83.487,
+            "exp_angle": 112.864,
+            "std": 1.69
+        },
+        {
+            "a1": "B0.1..OP2",
+            "a2": "B0.1..P",
+            "a3": "B0.1..OP1",
+            "angle": 135.587,
+            "exp_angle": 112.864,
+            "std": 1.69
+        },
+        {
+            "a1": "A0.1..P",
+            "a2": "A0.1..O5'",
+            "a3": "A0.1..C5'",
+            "angle": 100.532,
+            "exp_angle": 118.783,
+            "std": 1.5
+        }
+    ],
+    "reference_clashes": [],
+    "reference_bad_bonds": [],
+    "reference_bad_angles": [],
+    "dockq_reference_interfaces": [],
+    "dockq_interfaces": [],
+    "dockq": [],
+    "fnat": [],
+    "fnonnat": [],
+    "irmsd": [],
+    "lrmsd": [],
+    "nnat": [],
+    "nmdl": [],
+    "dockq_ave": 0.0,
+    "dockq_wave": 0.0,
+    "dockq_ave_full": 0.0,
+    "dockq_wave_full": 0.0,
+    "oligo_gdtts": 0.871,
+    "oligo_gdtha": 0.789,
+    "rmsd": 2.48,
+    "transform": [
+        [
+            0.49235278367996216,
+            -0.13738422095775604,
+            -0.8594852685928345,
+            9.359169960021973
+        ],
+        [
+            -0.22586145997047424,
+            -0.9738051891326904,
+            0.026273801922798157,
+            1.6168986558914185
+        ],
+        [
+            -0.8405805230140686,
+            0.1811884641647339,
+            -0.5104853510856628,
+            4.664534568786621
+        ],
+        [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+        ]
+    ],
+    "tm_score": 0.938,
+    "usalign_mapping": {
+        "A": "A0",
+        "B": "B0",
+        "C": "C0"
+    },
+    "model": "./outputs/prediction/Protenix/8e3r-assembly1/seed_42/predictions/8e3r-assembly1_seed_42_sample_2_postprocessed.cif",
+    "reference": "./ground_truths/8e3r-assembly1.cif",
+    "fault_tolerant": true,
+    "model_biounit": null,
+    "reference_biounit": null,
+    "residue_number_alignment": false,
+    "enforce_consistency": false,
+    "cad_exec": null,
+    "usalign_exec": null,
+    "lddt_no_stereochecks": false,
+    "min_pep_length": 4,
+    "min_nuc_length": 4,
+    "lddt_add_mdl_contacts": false,
+    "dockq_capri_peptide": false,
+    "status": "SUCCESS"
+}

@@ -34,7 +34,15 @@ FoldBench is a low-homology benchmark that spans proteins, nucleic acids, ligand
   - For protein–ligand interfaces: LRMSD < 2 Å and LDDT-PLI > 0.8
   - For all other interfaces: DockQ ≥ 0.23
 
+## Evaluation examples
+Openstructure and DockQ are used as assessment tools for evaluation. We provide some prediction results as evaluation examples. The evaluation results are placed in `./output/evaluation/{model_name}/{target_type}.csv`.
 
+```bash
+cd foldbench
+conda env create -f environment.yml
+conda activate foldbench
+python evaluate.py  --prediction_dir ./outputs/prediction/Protenix --evaluation_dir ./outputs/evaluation/Protenix
+```
 
 ## Acknowledgement
 We gratefully acknowledge the developers of the following projects:

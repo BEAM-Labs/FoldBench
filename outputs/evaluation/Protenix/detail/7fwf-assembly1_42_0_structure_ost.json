@@ -1,0 +1,93 @@
+{
+    "reference_chains": [
+        "A"
+    ],
+    "model_chains": [
+        "A0"
+    ],
+    "chem_groups": [
+        [
+            "A"
+        ]
+    ],
+    "chem_mapping": [
+        [
+            "A0"
+        ]
+    ],
+    "chain_mapping": {
+        "A": "A0"
+    },
+    "aln": [
+        ">reference:A\n-----DAFVGTWKLVSSENFDDYMKELGVGFATRKMGGMAKPNCIISVNGDVITIKTESTLKNTEISFILGQEFDEVTADDRKVKSTITLDGGVLVQVQKWDGKSTTIKRKREDDKLVVECVMKGVTCTRVYERA\n>model:A0\nGSHMCDAFVGTWKLVSSENFDDYMKELGVGFATRKMGGMAKPNCIISVNGDVITIKTESTLKNTEISFILGQEFDEVTADDRKVKSTITLDGGVLVQVQKWDGKSTTIKRKREDDKLVVECVMKGVTCTRVYERA"
+    ],
+    "inconsistent_residues": [],
+    "lddt": 0.949,
+    "model_clashes": [],
+    "model_bad_bonds": [],
+    "model_bad_angles": [],
+    "reference_clashes": [],
+    "reference_bad_bonds": [],
+    "reference_bad_angles": [],
+    "dockq_reference_interfaces": [],
+    "dockq_interfaces": [],
+    "dockq": [],
+    "fnat": [],
+    "fnonnat": [],
+    "irmsd": [],
+    "lrmsd": [],
+    "nnat": [],
+    "nmdl": [],
+    "dockq_ave": 0.0,
+    "dockq_wave": 0.0,
+    "dockq_ave_full": 0.0,
+    "dockq_wave_full": 0.0,
+    "oligo_gdtts": 1.0,
+    "oligo_gdtha": 0.979,
+    "rmsd": 0.307,
+    "transform": [
+        [
+            0.24674691259860992,
+            0.2745996117591858,
+            -0.9293609261512756,
+            11.901955604553223
+        ],
+        [
+            -0.9138505458831787,
+            -0.2531973719596863,
+            -0.31744155287742615,
+            -2.833122968673706
+        ],
+        [
+            -0.32248052954673767,
+            0.9276243448257446,
+            0.18846717476844788,
+            -15.03422737121582
+        ],
+        [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+        ]
+    ],
+    "tm_score": 0.995,
+    "usalign_mapping": {
+        "A": "A0"
+    },
+    "model": "./outputs/prediction/Protenix/7fwf-assembly1/seed_42/predictions/7fwf-assembly1_seed_42_sample_0_postprocessed.cif",
+    "reference": "./ground_truths/7fwf-assembly1.cif",
+    "fault_tolerant": true,
+    "model_biounit": null,
+    "reference_biounit": null,
+    "residue_number_alignment": false,
+    "enforce_consistency": false,
+    "cad_exec": null,
+    "usalign_exec": null,
+    "lddt_no_stereochecks": false,
+    "min_pep_length": 4,
+    "min_nuc_length": 4,
+    "lddt_add_mdl_contacts": false,
+    "dockq_capri_peptide": false,
+    "status": "SUCCESS"
+}
