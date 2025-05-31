@@ -320,4 +320,4 @@ def eval_by_dockqv2(target_df,interface_type,evaluation_dir,ground_truth_dir,max
 
     print(f"Total results for {interface_type}: {len(results)}")
     df = pd.DataFrame(results)
-    df.to_csv(os.path.join(evaluation_dir,f"{interface_type}_dockqv2.csv"), index=False)
+    df.to_csv(os.path.join(evaluation_dir,'raw',f"{interface_type}_dockqv2.csv"), index=False)

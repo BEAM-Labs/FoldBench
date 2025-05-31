@@ -1,0 +1,6 @@
+pdb_id,interface_chain_id_1,interface_chain_id_2,seed,sample,ranking_score,prediction_path,rmsd,lddt-lp,lddt-pli
+7fwf-assembly1,A,D,42,0,0.9773752689361572,./outputs/prediction/Protenix/7fwf-assembly1/seed_42/predictions/7fwf-assembly1_seed_42_sample_0_postprocessed.cif,0.7118664383888245,0.9637357937186851,0.9188432693481445
+7fwf-assembly1,A,D,42,1,0.9766969680786132,./outputs/prediction/Protenix/7fwf-assembly1/seed_42/predictions/7fwf-assembly1_seed_42_sample_1_postprocessed.cif,0.6980211138725281,0.960191861175608,0.9183768630027771
+7fwf-assembly1,A,D,42,2,0.9764403104782104,./outputs/prediction/Protenix/7fwf-assembly1/seed_42/predictions/7fwf-assembly1_seed_42_sample_2_postprocessed.cif,0.7282251715660095,0.9617194183062446,0.9127798676490784
+7fwf-assembly1,A,D,42,3,0.9747785329818726,./outputs/prediction/Protenix/7fwf-assembly1/seed_42/predictions/7fwf-assembly1_seed_42_sample_3_postprocessed.cif,0.7008622288703918,0.9635524868630087,0.9155783653259277
+7fwf-assembly1,A,D,42,4,0.97437185049057,./outputs/prediction/Protenix/7fwf-assembly1/seed_42/predictions/7fwf-assembly1_seed_42_sample_4_postprocessed.cif,0.7229023575782776,0.9676768911157277,0.9151119589805603
