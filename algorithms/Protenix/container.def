@@ -1,0 +1,40 @@
+Bootstrap: docker
+From: ai4s-cn-beijing.cr.volces.com/pytorch-mirror/pytorch:2.3.1-cuda12.1-cudnn8-devel
+
+
+%environment
+    # Define system variables to provide GPU access within the container.
+    export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+
+    # Define python path
+    export PYTHON=/opt/conda/bin/python
+
+%files
+    # Copy algorithm-related files to a separate dir /algo.
+    # Don't change the dir name.
+    algorithms/Protenix /algo
+    algorithms/base /algo/base
+
+%post
+    # Download algorithm source code
+    cd /algo
+
+    # from github
+    # git clone https://github.com/bytedance/Protenix.git
+    # cd ./Protenix
+    # pip install -e .
+
+    # from local source code
+    cd ./Protenix
+    # pip install -e . 
+    pip install -e .
+    
+    # from pip
+    # pip install protenix
+
+%post
+    # Make sure make_predictions.sh file is executable.
+    chmod +x /algo/make_predictions.sh
+
+# Run algorithm and convert outputs.
+# Data is expected to be mounted into /algo/data dir.

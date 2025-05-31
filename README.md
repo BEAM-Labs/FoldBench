@@ -5,7 +5,9 @@
 
 FoldBench is a low-homology benchmark that spans proteins, nucleic acids, ligands, and six major interaction types, enabling assessments that were previously infeasible with task-specific datasets.
 
-## Leaderboard
+## 🏆 Leaderboard
+
+Scores represent the success rate for interface prediction tasks and LDDT for monomer prediction tasks.
 
 ### Protein Interactions
 
@@ -34,28 +36,71 @@ FoldBench is a low-homology benchmark that spans proteins, nucleic acids, ligand
   - For protein–ligand interfaces: LRMSD < 2 Å and LDDT-PLI > 0.8
   - For all other interfaces: DockQ ≥ 0.23
 
-## Evaluation examples
-Openstructure and DockQ are used as assessment tools for evaluation. We provide some prediction results as evaluation examples. The evaluation results are placed in `./output/evaluation/{model_name}/{target_type}.csv`.
+## 🚀 Getting Started
+
+To get started with FoldBench, clone the repository and set up the Conda environment.
 
 ```bash
-cd foldbench
+# 1. Clone the repository
+git clone https://github.com/BEAM-Labs/FoldBench.git
+cd FoldBench
+
+# 2. Create and activate the Conda environment for evaluation
 conda env create -f environment.yml
 conda activate foldbench
-python evaluate.py  --prediction_dir ./outputs/prediction/Protenix --evaluation_dir ./outputs/evaluation/Protenix
 ```
 
-## Acknowledgement
-We gratefully acknowledge the developers of the following projects:
+## ⚙️ Reproducing Our Evaluation
+
+You can use our evaluation scripts to reproduce the scores for any model, such as Protenix, whose predictions are included as an example. The final results will be generated in `summary_table.csv`.
+
+```bash
+# Ensure you are in the FoldBench root directory and the conda environment is active
+
+# Step 1: Calculate per-target scores from prediction files
+# This uses OpenStructure (ost) and DockQ to score each prediction against its ground truth
+python evaluate.py \
+  --targets_dir ./targets \
+  --evaluation_dir ./outputs/evaluation \
+  --algorithm_name Protenix \
+  --ground_truth_dir ./ground_truths
+
+# Step 2: Aggregate scores and calculate the final success rates/LDDT
+# This summarizes the results for specified models and tasks into a final table
+python task_score_summary.py \
+  --evaluation_dir ./outputs/evaluation \
+  --target_dir ./targets \
+  --output_path ./summary_table.csv \
+  --algorithm_names Protenix \
+  --targets interface_protein_ligand interface_protein_dna monomer_protein \
+  --metric_type rank
+```
+
+## ✨ Integrating a New Model into FoldBench
+
+We enthusiastically welcome community submissions\!
+
+To ensure a fair and unbiased comparison, FoldBench operates as a **blind benchmark**. We do not publicize the target PDBs. Instead, you can submit your algorithm for us to run the tests.
+
+For detailed instructions on how to package your model for submission, please see the contributor's guide:
+**[Integrating a New Model into FoldBench](./algorithms/README.md)**
+
+## 🙏 Acknowledgements
+
+We gratefully acknowledge the developers of the following projects, which are essential to FoldBench:
+
 + [Alphafold3](https://github.com/google-deepmind/alphafold3)
 + [Protenix](https://github.com/bytedance/Protenix)
 + [Chai-1](https://github.com/chaidiscovery/chai-lab)
 + [Boltz-1](https://github.com/jwohlwend/boltz)
 + [Helixfold3](https://github.com/PaddlePaddle/PaddleHelix/tree/dev/apps/protein_folding/helixfold3)
-+ [Openstructure](https://git.scicore.unibas.ch/schwede/openstructure)
++ [OpenStructure](https://git.scicore.unibas.ch/schwede/openstructure)
 + [DockQ](https://github.com/bjornwallner/DockQ)
 
-## Cite
-If you use FoldBench in your research, please cite:
+## ✍️ How to Cite
+
+If you use FoldBench in your research, please cite our paper:
+
 ```bibtex
 @article {Xu2025.05.22.655600,
 	author = {Xu, Sheng and Feng, Qiantai and Qiao, Lifeng and Wu, Hao and Shen, Tao and Cheng, Yu and Zheng, Shuangjia and Sun, Siqi},

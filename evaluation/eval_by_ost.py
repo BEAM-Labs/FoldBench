@@ -133,15 +133,6 @@ def ost_evaluation(args):
     row, ground_truth_path, detail_path, mode= args
 
     pdb_id = row["pdb_id"]
-    if 'interface_chain_id_1' in row.keys() and 'interface_chain_id_2' in row.keys():
-        interface_chain_id_1 = row["interface_chain_id_1"]
-        interface_chain_id_2 = row["interface_chain_id_2"]
-    elif 'native_chain_id_1' in row.keys() and 'native_chain_id_2' in row.keys():
-        interface_chain_id_1 = row["native_chain_id_1"]
-        interface_chain_id_2 = row["native_chain_id_2"]
-    elif 'chain_id' in row.keys():
-        interface_chain_id_1 = row["chain_id"]
-        interface_chain_id_2 = row["chain_id"]
     seed = row["seed"]
     sample = row["sample"]
     prediction_path = row["prediction_path"]
@@ -149,7 +140,6 @@ def ost_evaluation(args):
     output_path = f'{detail_path}/{pdb_id}_{seed}_{sample}_{mode}_ost.json'
     if os.path.exists(output_path):
         return "exist"
-
 
     if not os.path.exists(prediction_path):
         print(f"prediction_path is None for {pdb_id} with seed {seed} and sample {sample}")
@@ -290,4 +280,4 @@ def eval_by_ost(target_df,target_type,evaluation_dir,ground_truth_dir,max_worker
 
     print(f"Total results for {target_type}: {len(results)}")
     df = pd.DataFrame(results)
-    df.to_csv(os.path.join(evaluation_dir,f"{target_type}_ost.csv"), index=False)
+    df.to_csv(os.path.join(evaluation_dir,'raw',f"{target_type}_ost.csv"), index=False)

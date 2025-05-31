@@ -1,0 +1,212 @@
+[
+    {
+        "dialect": "alphafold3",
+        "version": 2,
+        "name": "8tuz-assembly1",
+        "sequences": [
+            {
+                "protein": {
+                    "id": "A",
+                    "sequence": "EVQLVQSGEEVKKPGESLKISCKGSGYKFSSYWIGWVRQMPGKGLEWMGIIFPGDSDKRYSPSFQGQVTISADKSISTVYLQWSSLKASDTAMYYCARHITTHTYRGFFDFWGQGTLVTVSSASTKGPSVFPLAPSSKSTSGGTAALGCLVKDYFPEPVTVSWNSGALTSGVHTFPAVLQSSGLYSLSSVVTVPSSSLGTQTYICNVNHKPSNTKVDKRVEPK",
+                    "modifications": [],
+                    "unpairedMsa": null,
+                    "pairedMsa": null,
+                    "templates": null
+                }
+            },
+            {
+                "protein": {
+                    "id": "B",
+                    "sequence": "QLTQSPSSLSASVGDRVTITCRASQDISSALAWYQQKPGKAPKLLIYDVSSLESGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQFNGYPHRLTFGGGTKVEIKRTVAAPSVFIFPPSDEQLKSGTASVVCLLNNFYPREAKVQWKVDNALQSGNSQESVTEQDSKDSTYSLSSTLTLSKADYEKHKVYACEVTHQGLSSPVTKSFNRGE",
+                    "modifications": [],
+                    "unpairedMsa": null,
+                    "pairedMsa": null,
+                    "templates": null
+                }
+            },
+            {
+                "protein": {
+                    "id": "C",
+                    "sequence": "SLDEKNSVSVDLPGEMKVLVSKEKNKDGKYDLIATVDKLELKGTSDKNNGSGVLEGVKADKSKVKLTISDDLGQTTLEVFKEDGKTLVSKKVTSKDKSSTEEKFNEKGEVSEKIITRADGTRLEYTGIKSDGSGKAKEVLKGYVLEGTLTAEKTTLVVKEGTVTLSKNISKSGEVSVELNDTDSSAATKKTAAWNSGTSTLTITVNSKKTKDLVFTKENTITVQQYDSNGTKLEGSAVEITKLDEIKNALK",
+                    "modifications": [],
+                    "unpairedMsa": null,
+                    "pairedMsa": null,
+                    "templates": null
+                }
+            },
+            {
+                "ligand": {
+                    "id": [
+                        "D",
+                        "E",
+                        "J",
+                        "L",
+                        "M",
+                        "N"
+                    ],
+                    "ccdCodes": [
+                        "EDO"
+                    ]
+                }
+            },
+            {
+                "ligand": {
+                    "id": [
+                        "F",
+                        "G",
+                        "H",
+                        "I",
+                        "K",
+                        "O",
+                        "P"
+                    ],
+                    "ccdCodes": [
+                        "CL"
+                    ]
+                }
+            }
+        ],
+        "modelSeeds": [
+            "42",
+            "66",
+            "101",
+            "2024",
+            "8888"
+        ],
+        "userCCD": null
+    },
+    {
+        "dialect": "alphafold3",
+        "version": 2,
+        "name": "7fwf-assembly1",
+        "sequences": [
+            {
+                "protein": {
+                    "id": "A",
+                    "sequence": "GSHMCDAFVGTWKLVSSENFDDYMKELGVGFATRKMGGMAKPNCIISVNGDVITIKTESTLKNTEISFILGQEFDEVTADDRKVKSTITLDGGVLVQVQKWDGKSTTIKRKREDDKLVVECVMKGVTCTRVYERA",
+                    "modifications": [],
+                    "unpairedMsa": null,
+                    "pairedMsa": null,
+                    "templates": null
+                }
+            },
+            {
+                "ligand": {
+                    "id": [
+                        "B",
+                        "C",
+                        "E"
+                    ],
+                    "ccdCodes": [
+                        "DMS"
+                    ]
+                }
+            },
+            {
+                "ligand": {
+                    "id": "D",
+                    "ccdCodes": [
+                        "MQF"
+                    ]
+                }
+            }
+        ],
+        "modelSeeds": [
+            "42",
+            "66",
+            "101",
+            "2024",
+            "8888"
+        ],
+        "userCCD": null
+    },
+    {
+        "dialect": "alphafold3",
+        "version": 2,
+        "name": "5sbj-assembly1",
+        "sequences": [
+            {
+                "protein": {
+                    "id": "A",
+                    "sequence": "XYCSDCGADASQVRGGYCTNCGASADRIRX",
+                    "modifications": [
+                        {
+                            "ptmType": "ACE",
+                            "ptmPosition": 1
+                        },
+                        {
+                            "ptmType": "AIB",
+                            "ptmPosition": 10
+                        },
+                        {
+                            "ptmType": "AIB",
+                            "ptmPosition": 25
+                        },
+                        {
+                            "ptmType": "NH2",
+                            "ptmPosition": 30
+                        }
+                    ],
+                    "unpairedMsa": null,
+                    "pairedMsa": null,
+                    "templates": null
+                }
+            },
+            {
+                "ligand": {
+                    "id": "B",
+                    "ccdCodes": [
+                        "CD"
+                    ]
+                }
+            }
+        ],
+        "modelSeeds": [
+            "42",
+            "66",
+            "101",
+            "2024",
+            "8888"
+        ],
+        "userCCD": null
+    },
+    {
+        "dialect": "alphafold3",
+        "version": 2,
+        "name": "8e3r-assembly1",
+        "sequences": [
+            {
+                "dna": {
+                    "id": "A",
+                    "sequence": "AATAAAAGGAAGTGGG",
+                    "modifications": []
+                }
+            },
+            {
+                "dna": {
+                    "id": "B",
+                    "sequence": "TCCCACTTCCTTTTAT",
+                    "modifications": []
+                }
+            },
+            {
+                "protein": {
+                    "id": "C",
+                    "sequence": "GSKKKIRLYQFLLDLLRSGDMKDSIWWVDKDKGTFQFSSKHKEALAHRWGIQKGNRKKMTYQKMARALRNYGKTGEVKKVKKKLTYQFSGEVLGRGGLAERRHPPH",
+                    "modifications": [],
+                    "unpairedMsa": null,
+                    "pairedMsa": null,
+                    "templates": null
+                }
+            }
+        ],
+        "modelSeeds": [
+            "42",
+            "66",
+            "101",
+            "2024",
+            "8888"
+        ],
+        "userCCD": null
+    }
+]
