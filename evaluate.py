@@ -9,16 +9,16 @@ import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    "--targets_dir", required=False, default='./targets', help="The dir with the targets files."
+    "--targets_dir", required=False, default='./samples/targets', help="The dir with the targets files."
 )
 parser.add_argument(
-    "--evaluation_dir", required=False,default='./outputs/evaluation', help="The dir with the evaluation files.",
+    "--evaluation_dir", required=False,default='./samples/outputs/evaluation', help="The dir with the evaluation files.",
 )
 parser.add_argument(
     "--algorithm_name", required=False, default='Protenix', help="The name of the algorithm.",
 )
 parser.add_argument(
-    "--ground_truth_dir", required=False, default='./ground_truths', help="The dir with the ground truth files.",
+    "--ground_truth_dir", required=False, default='./samples/ground_truths', help="The dir with the ground truth files.",
 )
 args = parser.parse_args()
 
@@ -30,7 +30,7 @@ target_types = ["interface_protein_ligand","interface_antibody_antigen","interfa
 
 
 
-prediction_summary_path = f'{evaluation_dir}/prediction_summary.csv'
+prediction_summary_path = f'{evaluation_dir}/prediction_reference.csv'
 prediction_summary_df = pd.read_csv(prediction_summary_path)
 
 # caculation

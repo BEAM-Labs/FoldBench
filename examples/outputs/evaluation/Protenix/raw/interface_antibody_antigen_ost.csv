@@ -1,0 +1,6 @@
+pdb_id,interface_chain_id_1,interface_chain_id_2,seed,sample,ranking_score,prediction_path,dockq_score,irmsd,lrmsd,len_dockq,lddt,tm_score,gdt_ts,rmsd
+8tuz-assembly1,A,C,42,4,0.9106789827346802,./examples/outputs/prediction/Protenix/8tuz-assembly1/seed_42/predictions/8tuz-assembly1_seed_42_sample_4_postprocessed.cif,0.492,1.359,11.086,3,0.909,0.879,0.73,4.046
+8tuz-assembly1,A,C,42,0,0.9199885725975036,./examples/outputs/prediction/Protenix/8tuz-assembly1/seed_42/predictions/8tuz-assembly1_seed_42_sample_0_postprocessed.cif,0.486,1.484,12.557,3,0.911,0.868,0.724,4.358
+8tuz-assembly1,A,C,42,2,0.9145904183387756,./examples/outputs/prediction/Protenix/8tuz-assembly1/seed_42/predictions/8tuz-assembly1_seed_42_sample_2_postprocessed.cif,0.459,1.504,12.34,3,0.911,0.893,0.746,3.664
+8tuz-assembly1,A,C,42,1,0.9151489734649658,./examples/outputs/prediction/Protenix/8tuz-assembly1/seed_42/predictions/8tuz-assembly1_seed_42_sample_1_postprocessed.cif,0.459,1.425,13.082,3,0.905,0.862,0.727,4.581
+8tuz-assembly1,A,C,42,3,0.9129141569137572,./examples/outputs/prediction/Protenix/8tuz-assembly1/seed_42/predictions/8tuz-assembly1_seed_42_sample_3_postprocessed.cif,0.443,1.604,13.644,3,0.911,0.85,0.716,4.872

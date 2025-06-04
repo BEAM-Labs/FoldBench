@@ -31,5 +31,5 @@ $PYTHON_PATH /algo/Protenix/runner/inference.py \
 --use_msa_server
 
 # Convert predictions to the general cif format, 
-# and generate evaluation prediction_summary.csv in evaluation_dir
+# and generate evaluation prediction_reference.csv in evaluation_dir
 $PYTHON_PATH ./postprocess.py --input_dir="$input_dir" --prediction_dir="$prediction_dir" --evaluation_dir="$evaluation_dir"

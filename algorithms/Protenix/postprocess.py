@@ -1,6 +1,6 @@
 """
 postprocess for algorithm. 
-1. It is required to generate prediction_summary.csv in ./outputs/evaluation/{algorithm} for our benchmark. The keys should include pdb_id, seed, sample, ranking_score, and prediction_path.
+1. It is required to generate prediction_reference.csv in ./outputs/evaluation/{algorithm} for our benchmark. The keys should include pdb_id, seed, sample, ranking_score, and prediction_path.
 2. Convert predictions from the algorithm output format to a format supported by OpenStructure and DockQv2. If the sample test succeeds, you can obtain the scores for each target in ./outputs/evaluation/{algorithm}.
 You can use PostProcess.postprocess() to perform postprocessing.  
 """
@@ -112,7 +112,7 @@ class PostProcess():
             data.append(tmp)
 
         df = pd.DataFrame(data)
-        df.to_csv(os.path.join(evaluation_dir, f'prediction_summary.csv'), index=False)
+        df.to_csv(os.path.join(evaluation_dir, f'prediction_reference.csv'), index=False)
 
 parser = argparse.ArgumentParser()
 parser.add_argument(

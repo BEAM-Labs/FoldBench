@@ -12,32 +12,6 @@ Before you begin, ensure your environment meets the following system requirement
 
 ---
 
-## Repository Structure
-
-The FoldBench repository is organized to separate benchmark data, algorithm-specific code, and results. Your files will be added to the `FoldBench/algorithms/` directory.
-
-```
-FoldBench/
-├── algorithms/
-│   ├── algorithm_name/  # Your model's code and definition file go here
-│   └── ...
-├── outputs/
-│   ├── input/           # Preprocessed inputs for each algorithm
-│   │   └── algorithm_name/
-│   ├── prediction/      # Model predictions (e.g., .cif files)
-│   │   └── algorithm_name/
-│   └── evaluation/      # Final scores and summaries
-│       └── algorithm_name/
-├── targets/             # Benchmark target definitions
-├── build_apptainer_images.sh # Script to build all algorithm containers
-├── alphafold3_inputs.json    # Standardized benchmark input file
-├── environment.yml           # Conda environment for evaluation scripts
-├── run.sh                    # Master script to run inference and evaluation
-└── ...
-```
-
----
-
 ## Preparing Your Algorithm
 
 To add your model, create a new directory inside `FoldBench/algorithms/` using your algorithm's name. This directory must contain the following four files:
@@ -62,7 +36,7 @@ This is the main inference script that runs your model. It will be executed from
 ### 4. ✨ `postprocess.py`
 This script standardizes your model's output for evaluation. It must contain a `PostProcess.postprocess()` method and perform two key tasks:
 
-1.  **Generate Prediction Summary:** Create a summary file named `prediction_summary.csv` in the evaluation directory: `./outputs/evaluation/{algorithm_name}/`. This CSV file is **required** for the benchmark and must include the following columns: `pdb_id`, `seed`, `sample`, `ranking_score`, and `prediction_path`.
+1.  **Generate Prediction Summary:** Create a summary file named `prediction_reference.csv` in the evaluation directory: `./outputs/evaluation/{algorithm_name}/prediction_reference.csv`. This CSV file is **required** for the benchmark and must include the following columns: `pdb_id`, `seed`, `sample`, `ranking_score`, and `prediction_path`.
 2.  **Format for Evaluation:** Convert your model's raw output files (located in `./outputs/prediction/{algorithm_name}/`) into a format compatible with our evaluation tools ([OpenStructure](https://git.scicore.unibas.ch/schwede/openstructure) and [DockQ](https://github.com/bjornwallner/DockQ)).
 
 ---
@@ -91,10 +65,5 @@ Activate the conda environment and execute the main run script. This will automa
 conda activate foldbench
 ./run.sh
 ```
-<<<<<<< HEAD
-If successful, the final scores for your model will be available in `./outputs/evaluation/{algorithm_name}/`.
-=======
-
->>>>>>> upstream/main
 
 Once your model runs successfully, please submit a pull request to add it to our platform. We look forward to your contribution!

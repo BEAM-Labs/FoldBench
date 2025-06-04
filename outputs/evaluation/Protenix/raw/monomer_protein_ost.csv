@@ -1,6 +1,0 @@
-pdb_id,chain_id,seed,sample,ranking_score,prediction_path,dockq_score,irmsd,lrmsd,len_dockq,lddt,tm_score,gdt_ts,rmsd
-5sbj-assembly1,A,42,2,0.9024255275726318,./outputs/prediction/Protenix/5sbj-assembly1/seed_42/predictions/5sbj-assembly1_seed_42_sample_2_postprocessed.cif,,,,0,0.736,0.559,0.821,1.811
-5sbj-assembly1,A,42,0,0.9198831915855408,./outputs/prediction/Protenix/5sbj-assembly1/seed_42/predictions/5sbj-assembly1_seed_42_sample_0_postprocessed.cif,,,,0,0.745,0.569,0.83,1.746
-5sbj-assembly1,A,42,3,0.8994913101196289,./outputs/prediction/Protenix/5sbj-assembly1/seed_42/predictions/5sbj-assembly1_seed_42_sample_3_postprocessed.cif,,,,0,0.767,0.569,0.848,1.63
-5sbj-assembly1,A,42,1,0.9090129137039183,./outputs/prediction/Protenix/5sbj-assembly1/seed_42/predictions/5sbj-assembly1_seed_42_sample_1_postprocessed.cif,,,,0,0.761,0.572,0.83,1.624
-5sbj-assembly1,A,42,4,0.83572918176651,./outputs/prediction/Protenix/5sbj-assembly1/seed_42/predictions/5sbj-assembly1_seed_42_sample_4_postprocessed.cif,,,,0,0.734,0.579,0.839,1.695

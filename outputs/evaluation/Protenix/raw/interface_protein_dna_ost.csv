@@ -1,6 +1,0 @@
-pdb_id,interface_chain_id_1,interface_chain_id_2,seed,sample,ranking_score,prediction_path,dockq_score,irmsd,lrmsd,len_dockq,lddt,tm_score,gdt_ts,rmsd
-8e3r-assembly1,A,C,42,0,0.9783343076705932,./outputs/prediction/Protenix/8e3r-assembly1/seed_42/predictions/8e3r-assembly1_seed_42_sample_0_postprocessed.cif,,,,0,0.882,0.943,0.877,2.438
-8e3r-assembly1,A,C,42,3,0.9781919717788696,./outputs/prediction/Protenix/8e3r-assembly1/seed_42/predictions/8e3r-assembly1_seed_42_sample_3_postprocessed.cif,,,,0,0.898,0.937,0.875,2.493
-8e3r-assembly1,A,C,42,2,0.9782168865203856,./outputs/prediction/Protenix/8e3r-assembly1/seed_42/predictions/8e3r-assembly1_seed_42_sample_2_postprocessed.cif,,,,0,0.89,0.938,0.871,2.48
-8e3r-assembly1,A,C,42,1,0.9782965183258056,./outputs/prediction/Protenix/8e3r-assembly1/seed_42/predictions/8e3r-assembly1_seed_42_sample_1_postprocessed.cif,,,,0,0.897,0.938,0.871,2.469
-8e3r-assembly1,A,C,42,4,0.978127896785736,./outputs/prediction/Protenix/8e3r-assembly1/seed_42/predictions/8e3r-assembly1_seed_42_sample_4_postprocessed.cif,,,,0,0.899,0.939,0.873,2.479

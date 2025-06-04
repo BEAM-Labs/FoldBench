@@ -5,6 +5,56 @@
 
 FoldBench is a low-homology benchmark that spans proteins, nucleic acids, ligands, and six major interaction types, enabling assessments that were previously infeasible with task-specific datasets.
 
+
+## Repository Structure
+
+The FoldBench repository is organized to separate benchmark data, evaluation code, and evaluation sample. 
+
+```
+FoldBench/
+├── targets/               # FoldBench targets csv files
+│   ├── interface_antibody_antigen.csv
+│   └── ...
+├── algorithms/
+│   ├── algorithm_name/              # Custom model's code and definition files go here
+│   └── ...
+├── examples/
+│   ├── outputs/
+│   │   ├── input/                   # Preprocessed inputs for each algorithm
+│   │   │   └── algorithm_name/
+│   │   ├── prediction/              # Model predictions (e.g., .cif files)
+│   │   │   └── algorithm_name/
+│   │   └── evaluation/              # Final scores and summaries
+│   │       └── algorithm_name/
+│   ├── targets/                     # Target definitions
+│   ├── ground_truths/               # Ground truth cif files
+│   └── alphafold3_inputs.json       # Alphafold3 input json
+├── build_apptainer_images.sh        # Script to build all algorithm containers
+├── environment.yml                  # Conda environment for evaluation scripts
+├── run.sh                           # Master script to run inference and evaluation
+├── evaluate.py                      # Prediction evaluation
+├── task_score_summary.py            # Benchmark score summary
+└── ...
+```
+
+## 🎯 FoldBench Targets
+The FoldBench benchmark targets are open-source. This comprehensive dataset, located in the `targets` directory, is organized into two primary collections:
+
+### **Interfaces**
+
+* **Protein–Protein:** 279 interfaces,
+* **Antibody–Antigen:** 172 interfaces
+* **Protein–Ligand:** 558 interfaces
+* **Protein–Peptide:** 51 interfaces
+* **Protein–RNA:** 70 interfaces
+* **Protein–DNA:** 330 interfaces
+
+### **Monomeric Structures**
+
+* **Protein Monomers:** 330 structures
+* **RNA Monomers:**  15 structures
+* **DNA Monomers:** 14 structures
+
 ## 🏆 Leaderboard
 
 Scores represent the success rate for interface prediction tasks and LDDT for monomer prediction tasks.
@@ -50,9 +100,8 @@ conda env create -f environment.yml
 conda activate foldbench
 ```
 
-## ⚙️ Reproducing Our Evaluation
-
-You can use our evaluation scripts to reproduce the scores for any model, such as Protenix, whose predictions are included as an example. The final results will be generated in `summary_table.csv`.
+## ⚙️ Evaluation
+You can use our provided evaluation samples to reproduce the evaluation workflow. The final results will be generated in `examples/summary_table.csv`.
 
 ```bash
 # Ensure you are in the FoldBench root directory and the conda environment is active
@@ -60,30 +109,44 @@ You can use our evaluation scripts to reproduce the scores for any model, such a
 # Step 1: Calculate per-target scores from prediction files
 # This uses OpenStructure (ost) and DockQ to score each prediction against its ground truth
 python evaluate.py \
-  --targets_dir ./targets \
-  --evaluation_dir ./outputs/evaluation \
+  --targets_dir ./examples/targets \
+  --evaluation_dir ./examples/outputs/evaluation \
   --algorithm_name Protenix \
-  --ground_truth_dir ./ground_truths
+  --ground_truth_dir ./examples/ground_truths
 
 # Step 2: Aggregate scores and calculate the final success rates/LDDT
 # This summarizes the results for specified models and tasks into a final table
 python task_score_summary.py \
-  --evaluation_dir ./outputs/evaluation \
-  --target_dir ./targets \
-  --output_path ./summary_table.csv \
+  --evaluation_dir ./examples/outputs/evaluation \
+  --target_dir ./examples/targets \
+  --output_path ./examples/summary_table.csv \
   --algorithm_names Protenix \
   --targets interface_protein_ligand interface_protein_dna monomer_protein \
   --metric_type rank
 ```
 
+### Evaluate more structures
+To evaluate more structures in FoldBench, you'll need to follow these steps:
+
+#### **1. Prepare Your Data**
+
+* **Edit the target CSV files:** Modify the CSV files located in the `examples/targets` directory. These files should contain information about the structures you want to evaluate.
+* **Download ground truth CIF files:** Obtain the ground truth CIF (Crystallographic Information File) files for your custom structures from the [RCSB PDB website](https://www.rcsb.org/). Save these files into the `examples/ground_truths` directory. Ensure the filenames correspond to your data in the CSV files.
+
+
+#### **2. Update Evaluation Outputs**
+
+* **Modify `prediction_reference.csv`:** After preparing your data, you'll need to adjust the `./outputs/evaluation/{algorithm_name}/prediction_reference.csv` file to specify the model's ranking scores and the paths to the predicted structures. Please refer to the **[Integrating a New Model into FoldBench](./algorithms/README.md)**.
+
+
 ## ✨ Integrating a New Model into FoldBench
 
-We enthusiastically welcome community submissions\!
+We enthusiastically welcome community submissions!
 
-To ensure a fair and unbiased comparison, FoldBench operates as a **blind benchmark**. We do not publicize the target PDBs. Instead, you can submit your algorithm for us to run the tests.
+You can submit your algorithm for us to run the tests.
 
 For detailed instructions on how to package your model for submission, please see the contributor's guide:
-**[Integrating a New Model into FoldBench](./algorithms/README.md)**
+**[Integrating a New Model into FoldBench](./algorithms/README.md)**.
 
 ## 🙏 Acknowledgements
 

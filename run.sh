@@ -4,11 +4,11 @@
 algorithm="$1"
 gpu_id="$2"
 
-af3_input_json=./alphafold3_inputs.json 
-targets_dir=./targets
-output_root_dir="./outputs"
-time_log_root_dir="./times"
-ground_truth_dir="./ground_truths"
+af3_input_json=./examples/alphafold3_inputs.json 
+targets_dir=./examples/targets
+output_root_dir="./examples/outputs"
+time_log_root_dir="./examples/times"
+ground_truth_dir="./examples/ground_truths"
 overlay_size=2048
 
 

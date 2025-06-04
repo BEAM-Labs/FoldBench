@@ -1,0 +1,16 @@
+target,metric,Protenix
+interface_protein_ligand,rmsd_lddt-pli_success_rate,100.0
+interface_protein_ligand,lddt-lp,0.96
+interface_protein_ligand,lddt-pli,0.92
+interface_antibody_antigen,dockq_score_success_rate,100.0
+interface_antibody_antigen,irmsd,1.48
+interface_antibody_antigen,lrmsd,12.56
+interface_antibody_antigen,lddt,0.91
+interface_protein_dna,dockq_score_success_rate,100.0
+interface_protein_dna,irmsd,1.44
+interface_protein_dna,lrmsd,3.52
+interface_protein_dna,lddt,0.88
+monomer_protein,gdt-ts,0.83
+monomer_protein,tm-score,0.57
+monomer_protein,rmsd,1.75
+monomer_protein,lddt,0.74
