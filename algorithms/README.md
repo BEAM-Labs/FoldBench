@@ -76,8 +76,6 @@ Navigate to the root `FoldBench/` directory and run the build script. This comma
 
 ```bash
 cd FoldBench
-# don't forget to create the FoldBench evaluation enviroment first
-conda env create -f environment.yml
 
 # Build the Apptainer image for your algorithm
 ./build_apptainer_images.sh
@@ -93,6 +91,10 @@ Activate the conda environment and execute the main run script. This will automa
 conda activate foldbench
 ./run.sh
 ```
+<<<<<<< HEAD
 If successful, the final scores for your model will be available in `./outputs/evaluation/{algorithm_name}/`.
+=======
+
+>>>>>>> upstream/main
 
 Once your model runs successfully, please submit a pull request to add it to our platform. We look forward to your contribution!
