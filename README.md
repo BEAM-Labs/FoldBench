@@ -131,7 +131,7 @@ To evaluate more structures in FoldBench, you'll need to follow these steps:
 #### **1. Prepare Your Data**
 
 * **Edit the target CSV files:** Modify the CSV files located in the `examples/targets` directory. These files should contain information about the structures you want to evaluate.
-* **Download ground truth CIF files:** Obtain the ground truth CIF (Crystallographic Information File) files for your custom structures from the [RCSB PDB website](https://www.rcsb.org/). Save these files into the `examples/ground_truths` directory. Ensure the filenames correspond to your data in the CSV files.
+* **Download ground truth CIF files:** A package containing specific original CIF files referenced during the benchmark's creation is available for download here: [FoldBench Referenced CIFs](https://drive.google.com/file/d/17KdWDXKATaeHF6inPxhPHIRuIzeqiJxS/view?usp=sharing). Save these files in the `examples/ground_truths` directory. Ensure the filenames correspond to your data in the CSV files.
 
 
 #### **2. Update Evaluation Outputs**
