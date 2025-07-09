@@ -160,6 +160,12 @@ We gratefully acknowledge the developers of the following projects, which are es
 + [OpenStructure](https://git.scicore.unibas.ch/schwede/openstructure)
 + [DockQ](https://github.com/bjornwallner/DockQ)
 
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+The MIT License is a permissive open source license that allows for commercial and non-commercial use, modification, distribution, and private use of the software, provided that the original copyright notice and license terms are included.
+
 ## ✍️ How to Cite
 
 If you use FoldBench in your research, please cite our paper:
