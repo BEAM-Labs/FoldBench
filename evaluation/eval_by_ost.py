@@ -51,7 +51,7 @@ def get_structure_value(output_path,native_chain_id_1,native_chain_id_2):
             data = json.load(f)
         
 
-        for i,interface in enumerate(data['dockq_reference_interfaces']):
+        for i,interface in enumerate(data['dockq_interfaces']):
             if native_chain_id_1 in interface and native_chain_id_2 in interface:
                 dockq = data['dockq'][i]
                 irmsd = data['irmsd'][i]
