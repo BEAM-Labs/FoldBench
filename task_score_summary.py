@@ -97,7 +97,8 @@ def calculate_success_rate(df, metric, metric_type):
         success_rate = (len(best_rows[best_rows[metric] < 2.0])/len(best_rows))*100
     elif metric == 'rmsd_lddt-pli':
         df=df[df['rmsd'].notna() & df['lddt-pli'].notna()]
-        best_rows = get_best_rows(df, metric,metric_type)
+        # use rmsd to select best by default
+        best_rows = get_best_rows(df, 'rmsd',metric_type)
         success_rate = (len(best_rows[(best_rows['rmsd']<2.0) & (best_rows['lddt-pli']>0.8)])/len(best_rows))*100
 
     return success_rate
