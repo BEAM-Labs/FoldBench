@@ -196,13 +196,13 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--evaluation_dir", required=False, default='./samples/outputs/evaluation', help="The dir with the evaluation files.",
+        "--evaluation_dir", required=False, default='./examples/outputs/evaluation', help="The dir with the evaluation files.",
     )
     parser.add_argument(
-        "--target_dir", required=False, default='./samples/targets', help="The dir with the target files.",
+        "--target_dir", required=False, default='./examples/targets', help="The dir with the target files.",
     )
     parser.add_argument(
-        "--output_path", required=False, default='./samples/outputs/summary_table.csv', help="output path",
+        "--output_path", required=False, default='./examples/outputs/summary_table.csv', help="output path",
     )
     parser.add_argument(
         "--algorithm_names", required=False, default= ['Protenix'], nargs='+', help="models to evaluate",
