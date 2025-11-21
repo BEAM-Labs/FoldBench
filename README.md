@@ -5,8 +5,11 @@
 
 FoldBench is a low-homology benchmark that spans proteins, nucleic acids, ligands, and six major interaction types, enabling assessments that were previously infeasible with task-specific datasets.
 
+## 📢 Updates
 
-## Repository Structure
++ **2025-11-21**: RF3 and OF3 evaluation results will be coming soon! Stay tuned for comprehensive comparisons
+
+## 🏠 Repository Structure
 
 The FoldBench repository is organized to separate benchmark data, evaluation code, and evaluation sample. 
 
@@ -57,7 +60,9 @@ The FoldBench benchmark targets are open-source. This comprehensive dataset, loc
 
 ## 🏆 Leaderboard
 
-Scores represent the success rate for interface prediction tasks and LDDT for monomer prediction tasks.
+> **Evaluation Metrics:** Interface prediction tasks are evaluated by success rate, while monomer prediction tasks use LDDT (Local Distance Difference Test) scores. All results are based on comprehensive evaluation across our low-homology benchmark dataset.
+
+![summary](./assets/summary_performance.jpg)
 
 ### Protein Interactions
 
@@ -85,6 +90,17 @@ Scores represent the success rate for interface prediction tasks and LDDT for mo
 - Success is defined as:
   - For protein–ligand interfaces: LRMSD < 2 Å and LDDT-PLI > 0.8
   - For all other interfaces: DockQ ≥ 0.23
+
+## 📈 Detailed Performance Analysis
+
+### Protein-Protein & Antibody-Antigen Interactions
+![Protein-Protein Interactions](./assets/pp.png)
+
+### Protein-Ligand Interactions  
+![Protein-Ligand Interactions](./assets/ligand.png)
+
+### Nucleic Acid Interactions
+![Nucleic Acid Interactions](./assets/na.png)
 
 ## 🚀 Getting Started
 
