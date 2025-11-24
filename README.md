@@ -90,6 +90,7 @@ The FoldBench benchmark targets are open-source. This comprehensive dataset, loc
 - Success is defined as:
   - For protein–ligand interfaces: LRMSD < 2 Å and LDDT-PLI > 0.8
   - For all other interfaces: DockQ ≥ 0.23
+- We developed an algorithm to identify and prevent overfitting of models on FoldBench, ensuring fair and reliable evaluation.
 
 ## 📈 Detailed Performance Analysis
 
