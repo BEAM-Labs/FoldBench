@@ -6,6 +6,7 @@
 FoldBench is a low-homology benchmark spanning proteins, nucleic acids, ligands, and six major interaction types, enabling assessments that were previously infeasible with task-specific datasets.
 
 ## 📢 Updates
++ **2025-12-31**: The evaluation results for RosettaFold3 (latest) have been updated.
 + **2025-12-05**: The evaluation results for Boltz-2 and OpenFold3-preview have been updated.
 + **2025-12-04**: FoldBench has been published in [Nature Communications](https://www.nature.com/articles/s41467-025-67127-3).
 
@@ -14,7 +15,7 @@ The FoldBench benchmark targets are open source. This comprehensive dataset, loc
 
 ### **Interfaces**
 
-* **Protein–Protein:** 279 interfaces,
+* **Protein–Protein:** 279 interfaces
 * **Antibody–Antigen:** 172 interfaces
 * **Protein–Ligand:** 558 interfaces
 * **Protein–Peptide:** 51 interfaces
@@ -65,6 +66,7 @@ The FoldBench benchmark targets are open source. This comprehensive dataset, loc
 | Protenix       | 64.80%          | 38.36% | 53.25%          |
 | OpenFold 3 (preview)     | 68.22%          | 34.29% | 40.85%          |
 | Boltz-2*       | 70.54%          | 25.00% | 53.90%          |
+| RosettaFold3*       | 72.44%          | 37.50% | 57.28%     |
 
 
 #### Nucleic acids
@@ -77,13 +79,17 @@ The FoldBench benchmark targets are open source. This comprehensive dataset, loc
 | HelixFold 3    | 54.29%       | 61.18%       | 
 | Protenix       | 56.41%       | 67.63%       | 
 | OpenFold 3 (preview)     | 25.00%       | 5.81%        |
-| Boltz-2*       | 76.92%       | 73.84%       |
+| Boltz-2*       | 76.92%       | 73.84%  |
+| RosettaFold3*^  | -       | 66.07%       |
+
 
 
 
 *Models marked with * have a training cutoff later than FoldBench's reference date (2023-01-13). FoldBench targets are constructed to ensure **low homology specifically against the PDB data prior to 2023-01-13**. Consequently, models trained on data released after this date may have observed these targets or their close homologs during training (potential data leakage), compromising the low-homology evaluation condition. Results for these models are provided for reference only and should not be directly compared with strictly valid models.
 
 **Nucleic acid monomer results are omitted due to insufficient target availability. 
+
+^Results are not shown due to insufficient targets caused by errors during inference or evaluation stages.
 
 **Note:**
 - Interface prediction is evaluated by success rate.
@@ -230,5 +236,3 @@ If you use FoldBench in your research, please cite our paper:
 	year = {2025},
 }
 ```
-
-
