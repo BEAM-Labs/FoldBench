@@ -8,12 +8,16 @@ from multiprocessing import Pool
 import traceback
 import subprocess
 import numpy as np
+import signal
+import uuid
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed,TimeoutError
 import pandas as pd
 from tqdm import tqdm
 import traceback
 import json
 import os
+
+OST_TIMEOUT_SEC = int(os.environ.get("FOLDBENCH_OST_TIMEOUT_SEC", "600"))
 
 OST_COMPARE_LIGAND_STRUCTURE = r"""
 ost compare-ligand-structures \
@@ -34,6 +38,91 @@ OST_COMPARE_STRUCTURE = r"""
         --min-nuc-length 4 \
         --lddt --rigid-scores --tm-score --dockq \
 """
+
+def _run_ost_command(command, executable, timeout_sec):
+    """Run an OST command and terminate the whole process group on timeout."""
+    process = subprocess.Popen(
+        command,
+        shell=True,  # noqa: S602
+        executable=executable,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        start_new_session=True,
+    )
+    try:
+        stdout, stderr = process.communicate(timeout=timeout_sec)
+    except subprocess.TimeoutExpired as exc:
+        try:
+            os.killpg(process.pid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+        try:
+            stdout, stderr = process.communicate(timeout=10)
+        except subprocess.TimeoutExpired:
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            stdout, stderr = process.communicate()
+        exc.stdout = stdout
+        exc.stderr = stderr
+        raise exc
+
+    return subprocess.CompletedProcess(
+        args=command,
+        returncode=process.returncode,
+        stdout=stdout,
+        stderr=stderr,
+    )
+
+def _safe_json_value(value):
+    if pd.isna(value):
+        return None
+    if isinstance(value, np.generic):
+        return value.item()
+    return value
+
+def _is_valid_path(value):
+    if not isinstance(value, (str, bytes, os.PathLike)):
+        return False
+    return bool(os.fspath(value))
+
+def write_failed_detail(output_path, row, mode, reason, message=None, stdout=None, stderr=None):
+    failed_detail = {
+        "status": "failed",
+        "failure_reason": reason,
+        "failure_message": message,
+        "mode": mode,
+        "pdb_id": _safe_json_value(row.get("pdb_id")),
+        "seed": _safe_json_value(row.get("seed")),
+        "sample": _safe_json_value(row.get("sample")),
+        "prediction_path": _safe_json_value(row.get("prediction_path")),
+    }
+    if stdout:
+        failed_detail["stdout_tail"] = stdout[-4000:]
+    if stderr:
+        failed_detail["stderr_tail"] = stderr[-4000:]
+
+    tmp_output_path = f"{output_path}.{os.getpid()}.{uuid.uuid4().hex}.tmp"
+    with open(tmp_output_path, "w") as f:
+        json.dump(failed_detail, f, indent=2)
+    os.replace(tmp_output_path, output_path)
+
+def read_failed_detail(output_path):
+    try:
+        with open(output_path, "r") as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        return None
+    except json.JSONDecodeError:
+        return {
+            "status": "failed",
+            "failure_reason": "invalid_json",
+        }
+    if data.get("status") == "failed":
+        return data
+    return None
 
 def get_structure_value(output_path,native_chain_id_1,native_chain_id_2):
 
@@ -100,32 +189,29 @@ def evaluate_structure(
     reference,
     outdir: str,
     executable: str = "/bin/bash",
-    mode = 'ligand' # all, structure, ligand
+    mode = 'ligand', # all, structure, ligand
+    timeout_sec = OST_TIMEOUT_SEC,
 ) -> None:
     """Evaluate the structure."""
     if mode == 'ligand':
-        result = subprocess.run(
+        result = _run_ost_command(
             OST_COMPARE_LIGAND_STRUCTURE.format(
                 model_file=str(pred),
                 reference_file=str(reference),
                 output_path=os.path.join(outdir),
                 ),
-                shell=True,  # noqa: S602
-                check=False,
                 executable=executable,
-                capture_output=True,
+                timeout_sec=timeout_sec,
             )
     elif mode == 'structure':
-        result = subprocess.run(
+        result = _run_ost_command(
             OST_COMPARE_STRUCTURE.format(
                 model_file=str(pred),
                 reference_file=str(reference),
                 output_path=os.path.join(outdir),
                 ),
-                shell=True,  # noqa: S602
-                check=False,
                 executable=executable,
-                capture_output=True,
+                timeout_sec=timeout_sec,
             )
     return result
 
@@ -141,22 +227,59 @@ def ost_evaluation(args):
     if os.path.exists(output_path):
         return "exist"
 
-    if not os.path.exists(prediction_path):
+    if not _is_valid_path(prediction_path) or not os.path.exists(prediction_path):
         print(f"prediction_path is None for {pdb_id} with seed {seed} and sample {sample}")
+        write_failed_detail(
+            output_path,
+            row,
+            mode,
+            reason="prediction_path_missing",
+            message=f"prediction_path is missing or does not exist: {prediction_path}",
+        )
         return "prediction_path is None"
     
     native_path = os.path.join(ground_truth_path, f'{pdb_id}.cif')
     
     try:
-        evaluate_structure(
+        result = evaluate_structure(
             pred = prediction_path,
             reference = native_path,
             outdir = output_path,
             mode = mode
         )
+        if result.returncode != 0 and not os.path.exists(output_path):
+            write_failed_detail(
+                output_path,
+                row,
+                mode,
+                reason="ost_nonzero_returncode",
+                message=f"OST exited with return code {result.returncode}",
+                stdout=result.stdout,
+                stderr=result.stderr,
+            )
+            return "ost_nonzero_returncode"
+    except subprocess.TimeoutExpired as e:
+        print(f"OST timeout for {pdb_id} with seed {seed} and sample {sample} after {OST_TIMEOUT_SEC}s")
+        write_failed_detail(
+            output_path,
+            row,
+            mode,
+            reason="timeout",
+            message=f"OST command exceeded {OST_TIMEOUT_SEC}s",
+            stdout=getattr(e, "stdout", None),
+            stderr=getattr(e, "stderr", None),
+        )
+        return "timeout"
     except BaseException as e:
         print(f"Error when calculating dockq for {pdb_id} with seed {seed} and sample {sample}")
         print(traceback.format_exc())
+        write_failed_detail(
+            output_path,
+            row,
+            mode,
+            reason="exception",
+            message=traceback.format_exc(),
+        )
         return "Error when calculating dockq"
 
 def ost_get_result(args):
@@ -179,9 +302,34 @@ def ost_get_result(args):
     
     output_path = f'{detail_path}/{pdb_id}_{seed}_{sample}_{mode}_ost.json'
 
-    if not os.path.exists(prediction_path):
+    if not _is_valid_path(prediction_path) or not os.path.exists(prediction_path):
         print(f"prediction_path is None for {pdb_id} with seed {seed} and sample {sample}")
-        return "prediction_path is None"
+        result = {
+                **row,
+            }
+        result.update({
+            'evaluation_status': 'failed',
+            'evaluation_failure_reason': 'prediction_path_missing',
+            'evaluation_failure_message': f"prediction_path is missing or does not exist: {prediction_path}",
+        })
+        if mode == 'ligand':
+            result.update({
+                'rmsd': None,
+                'lddt-lp': None,
+                'lddt-pli': None,
+            })
+        elif mode == 'structure':
+            result.update({
+                'dockq_score': None,
+                'irmsd': None,
+                'lrmsd': None,
+                'len_dockq': None,
+                'lddt': None,
+                'tm_score': None,
+                'gdt_ts': None,
+                'rmsd': None,
+            })
+        return result
 
 
     result = {
@@ -189,9 +337,38 @@ def ost_get_result(args):
         }
 
     try:
+        failed_detail = read_failed_detail(output_path)
+        if failed_detail is not None:
+            result.update({
+                'evaluation_status': 'failed',
+                'evaluation_failure_reason': failed_detail.get('failure_reason'),
+                'evaluation_failure_message': failed_detail.get('failure_message'),
+            })
+            if mode == 'ligand':
+                result.update({
+                    'rmsd': None,
+                    'lddt-lp': None,
+                    'lddt-pli': None,
+                })
+            elif mode == 'structure':
+                result.update({
+                    'dockq_score': None,
+                    'irmsd': None,
+                    'lrmsd': None,
+                    'len_dockq': None,
+                    'lddt': None,
+                    'tm_score': None,
+                    'gdt_ts': None,
+                    'rmsd': None,
+                })
+            return result
+
         if mode == 'ligand':
             rmsd,lddt_lp, lddt_pli = get_ligand_value(output_path,interface_chain_id_1,interface_chain_id_2)
             result.update({
+                'evaluation_status': 'success',
+                'evaluation_failure_reason': None,
+                'evaluation_failure_message': None,
                 'rmsd': rmsd,
                 'lddt-lp': lddt_lp,
                 'lddt-pli': lddt_pli,
@@ -199,6 +376,9 @@ def ost_get_result(args):
         elif mode == 'structure':
             dockq_ost,irmsd,lrmsd,len_dockq,lddt,tm_score,gdt_ts,rmsd = get_structure_value(output_path,interface_chain_id_1,interface_chain_id_2)
             result.update({
+                'evaluation_status': 'success',
+                'evaluation_failure_reason': None,
+                'evaluation_failure_message': None,
                 'dockq_score': dockq_ost,
                 'irmsd':irmsd,
                 'lrmsd':lrmsd,

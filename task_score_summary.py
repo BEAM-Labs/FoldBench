@@ -23,56 +23,69 @@ def change_column_name(df):
         df.rename(columns={'native_chain_id_1': 'interface_chain_id_1', 'native_chain_id_2': 'interface_chain_id_2'}, inplace=True)
     return df
 
+def get_target_key_columns(df):
+    key_columns = ['pdb_id']
+    for column in [
+        'interface_chain_id_1',
+        'interface_chain_id_2',
+        'interface_chain_type_1',
+        'interface_chain_type_2',
+        'ligand_id',
+        'antibody_chain',
+        'antigen_chain',
+    ]:
+        if column in df.columns:
+            key_columns.append(column)
+    return key_columns
+
+def filter_to_target_keys(df, target_df):
+    key_columns = [column for column in get_target_key_columns(target_df) if column in df.columns]
+    if not key_columns:
+        return df
+
+    target_keys = target_df[key_columns].drop_duplicates()
+    return df.merge(target_keys, on=key_columns, how='inner')
+
 def find_overlap_sample(df, ref_df):
 
-    if 'interface_chain_id_1' in df.columns and 'interface_chain_id_2' in df.columns:
-        df_tuples = list(zip(df['pdb_id'], 
-                        df['interface_chain_id_1'], 
-                        df['interface_chain_id_2']))
-
-
-        ref_df_tuples = list(zip(ref_df['pdb_id'], 
-                                ref_df['interface_chain_id_1'], 
-                                ref_df['interface_chain_id_2']))
-    else:
-        df_tuples = list(zip(df['pdb_id']))
-        ref_df_tuples = list(zip(ref_df['pdb_id']))
-
-    
-
-    common_tuples = set(df_tuples).intersection(set(ref_df_tuples))
-
-
-    if 'interface_chain_id_1' in df.columns and 'interface_chain_id_2' in df.columns:
-        mask = [tuple(row) in common_tuples for row in df[['pdb_id', 'interface_chain_id_1', 'interface_chain_id_2']].values]
-    else:
-        mask = [tuple(row) in common_tuples for row in df[['pdb_id']].values]
-
-    
-    df = df[mask]
-    return df
+    return filter_to_target_keys(df, ref_df)
 
 # Get best prediction for each target
-def get_best_rows(df, metric, metric_type):
+def get_best_rows(df, metric, metric_type, target_df=None):
+    if target_df is not None:
+        key_columns = [column for column in get_target_key_columns(target_df) if column in df.columns]
+    elif 'interface_chain_id_1' in df.columns and 'interface_chain_id_2' in df.columns:
+        key_columns = ["pdb_id", "interface_chain_id_1", "interface_chain_id_2"]
+    else:
+        key_columns = ["pdb_id"]
+
+    if len(df) == 0:
+        return df
+
     if metric_type == 'rank':
-        if 'interface_chain_id_1' in df.columns and 'interface_chain_id_2' in df.columns:
-            best_rows = df.loc[df.groupby(["pdb_id","interface_chain_id_1","interface_chain_id_2"])['ranking_score'].idxmax()]
-        else:
-            best_rows = df.loc[df.groupby(["pdb_id"])['ranking_score'].idxmax()]
+        if 'ranking_score' not in df.columns:
+            return df.drop_duplicates(key_columns)
+        df_for_selection = df[df['ranking_score'].notna()]
+        if len(df_for_selection) == 0:
+            return df_for_selection
+        best_rows = df.loc[df_for_selection.groupby(key_columns)['ranking_score'].idxmax()]
     elif metric_type == 'best':
+        if metric not in df.columns:
+            return df.iloc[0:0]
+        df_for_selection = df[df[metric].notna()]
+        if len(df_for_selection) == 0:
+            return df_for_selection
         if metric in metric_max:
-            if 'interface_chain_id_1' in df.columns and 'interface_chain_id_2' in df.columns:
-                best_rows = df.loc[df.groupby(["pdb_id","interface_chain_id_1","interface_chain_id_2"])[metric].idxmax()]
-            else:
-                best_rows = df.loc[df.groupby(["pdb_id"])[metric].idxmax()]
+            best_rows = df.loc[df_for_selection.groupby(key_columns)[metric].idxmax()]
         elif metric in metric_min:
-            if 'interface_chain_id_1' in df.columns and 'interface_chain_id_2' in df.columns:
-                best_rows = df.loc[df.groupby(["pdb_id","interface_chain_id_1","interface_chain_id_2"])[metric].idxmin()]
-            else:
-                best_rows = df.loc[df.groupby(["pdb_id"])[metric].idxmin()]
+            best_rows = df.loc[df_for_selection.groupby(key_columns)[metric].idxmin()]
+        else:
+            best_rows = df_for_selection.drop_duplicates(key_columns)
+    else:
+        raise ValueError(f"Unsupported metric_type: {metric_type}")
     return best_rows
 
-def calculate_success_rate(df, metric, metric_type):
+def calculate_success_rate(df, metric, metric_type, target_df):
     """
     Calculate success rate based on a metric and threshold.
     
@@ -85,26 +98,32 @@ def calculate_success_rate(df, metric, metric_type):
 
 
 
-    if metric  == 'dockq_score':
-        df=df[df[metric].notna()]
-        best_rows = get_best_rows(df, metric,metric_type)
+    target_count = len(target_df[get_target_key_columns(target_df)].drop_duplicates())
+    if target_count == 0:
+        return float('nan')
 
-        success_rate = (len(best_rows[best_rows[metric] >= 0.23])/len(best_rows))*100
+    df = filter_to_target_keys(df, target_df)
+    if metric != 'rmsd_lddt-pli' and metric not in df.columns:
+        return None
+    if metric  == 'dockq_score':
+        best_rows = get_best_rows(df, metric, metric_type, target_df)
+
+        success_rate = (len(best_rows[best_rows[metric] >= 0.23])/target_count)*100
         
     elif metric == 'rmsd':
-        df=df[df[metric].notna()]
-        best_rows = get_best_rows(df, metric,metric_type)
-        success_rate = (len(best_rows[best_rows[metric] < 2.0])/len(best_rows))*100
+        best_rows = get_best_rows(df, metric, metric_type, target_df)
+        success_rate = (len(best_rows[best_rows[metric] < 2.0])/target_count)*100
     elif metric == 'rmsd_lddt-pli':
-        df=df[df['rmsd'].notna() & df['lddt-pli'].notna()]
+        if 'rmsd' not in df.columns or 'lddt-pli' not in df.columns:
+            return None
         # use rmsd to select best by default
-        best_rows = get_best_rows(df, 'rmsd',metric_type)
-        success_rate = (len(best_rows[(best_rows['rmsd']<2.0) & (best_rows['lddt-pli']>0.8)])/len(best_rows))*100
+        best_rows = get_best_rows(df, 'rmsd', metric_type, target_df)
+        success_rate = (len(best_rows[(best_rows['rmsd']<2.0) & (best_rows['lddt-pli']>0.8)])/target_count)*100
 
     return success_rate
 
 
-def calculate_score_avg(df, metric, metric_type):
+def calculate_score_avg(df, metric, metric_type, target_df):
     """
     Calculate success rate based on a metric and threshold.
     
@@ -115,15 +134,30 @@ def calculate_score_avg(df, metric, metric_type):
         float: Success rate
     """
 
-    df=df[df[metric].notna()]
-    best_rows = get_best_rows(df, metric,metric_type)
-    avg_score = best_rows[metric].mean()
+    target_count = len(target_df[get_target_key_columns(target_df)].drop_duplicates())
+    if target_count == 0:
+        return float('nan')
+
+    if metric not in df.columns:
+        return None
+
+    df = filter_to_target_keys(df, target_df)
+    best_rows = get_best_rows(df, metric, metric_type, target_df)
+    # Missing/failed targets are intentionally counted as 0 rather than removed
+    # from the denominator.
+    avg_score = best_rows[metric].fillna(0).sum()/target_count
 
 
         
     return avg_score
 
-def process_csv_files(evaluation_dir,target_dir,output_path,models,targets,metric_type):
+def get_result_filename(target, abag_scoring):
+    if target == "interface_antibody_antigen" and abag_scoring == "antigen_receptor":
+        return f"{target}_antigen_receptor_ost.csv"
+    return f"{target}_ost.csv"
+
+
+def process_csv_files(evaluation_dir,target_dir,output_path,models,targets,metric_type,abag_scoring="standard_ost_abag"):
 
     results = {}
     
@@ -132,7 +166,7 @@ def process_csv_files(evaluation_dir,target_dir,output_path,models,targets,metri
         results[model] = {}
 
         for target in targets:
-            result_path = os.path.join(evaluation_dir,model,'raw',f"{target}_ost.csv")
+            result_path = os.path.join(evaluation_dir,model,'raw',get_result_filename(target, abag_scoring))
             # 
             if not os.path.exists(result_path):
                 print(f'{result_path} not found')
@@ -153,7 +187,7 @@ def process_csv_files(evaluation_dir,target_dir,output_path,models,targets,metri
             # Process pp interface: dockq success_rate,irmsd,lrmsd,lddt
             if target in ["interface_protein_protein", "interface_protein_peptide", "interface_antibody_antigen","interface_protein_dna", "interface_protein_rna"]:
                    
-                results[model][target]['lddt'] = calculate_score_avg(result_df, 'lddt',metric_type)
+                results[model][target]['lddt'] = calculate_score_avg(result_df, 'lddt', metric_type, target_df)
                 
                 
                 if target in ["interface_protein_dna", "interface_protein_rna"]:
@@ -162,33 +196,33 @@ def process_csv_files(evaluation_dir,target_dir,output_path,models,targets,metri
                         result_df_dockqv2 = pd.read_csv(result_path_dockqv2)
                         result_df_dockqv2 = change_column_name(result_df_dockqv2)
                         result_df_dockqv2 = find_overlap_sample(result_df_dockqv2,target_df)
-                        results[model][target]['dockq_score_success_rate']  = calculate_success_rate(result_df_dockqv2, 'dockq_score',metric_type)
-                        results[model][target]['irmsd'] = calculate_score_avg(result_df_dockqv2, 'irmsd',metric_type)
-                        results[model][target]['lrmsd'] = calculate_score_avg(result_df_dockqv2, 'lrmsd',metric_type)
+                        results[model][target]['dockq_score_success_rate']  = calculate_success_rate(result_df_dockqv2, 'dockq_score', metric_type, target_df)
+                        results[model][target]['irmsd'] = calculate_score_avg(result_df_dockqv2, 'irmsd', metric_type, target_df)
+                        results[model][target]['lrmsd'] = calculate_score_avg(result_df_dockqv2, 'lrmsd', metric_type, target_df)
                 else:
-                    results[model][target]['dockq_score_success_rate']  = calculate_success_rate(result_df, 'dockq_score',metric_type)
-                    results[model][target]['irmsd'] = calculate_score_avg(result_df, 'irmsd',metric_type)
-                    results[model][target]['lrmsd'] = calculate_score_avg(result_df, 'lrmsd',metric_type)
+                    results[model][target]['dockq_score_success_rate']  = calculate_success_rate(result_df, 'dockq_score', metric_type, target_df)
+                    results[model][target]['irmsd'] = calculate_score_avg(result_df, 'irmsd', metric_type, target_df)
+                    results[model][target]['lrmsd'] = calculate_score_avg(result_df, 'lrmsd', metric_type, target_df)
 
             # Process pl interface: rmsd_lddt-pli success_rate,lddt-lp,lddt-pli
             elif target in ["interface_protein_ligand"]:
-                results[model][target]['rmsd_lddt-pli_success_rate'] = calculate_success_rate(result_df, 'rmsd_lddt-pli',metric_type)
-                results[model][target]['lddt-lp'] = calculate_score_avg(result_df, 'lddt-lp',metric_type)
-                results[model][target]['lddt-pli'] = calculate_score_avg(result_df, 'lddt-pli',metric_type)
+                results[model][target]['rmsd_lddt-pli_success_rate'] = calculate_success_rate(result_df, 'rmsd_lddt-pli', metric_type, target_df)
+                results[model][target]['lddt-lp'] = calculate_score_avg(result_df, 'lddt-lp', metric_type, target_df)
+                results[model][target]['lddt-pli'] = calculate_score_avg(result_df, 'lddt-pli', metric_type, target_df)
 
             # Process monomer: gdt_ts,tm-score,rmsd,lddt
             elif target in ["monomer_dna", "monomer_rna", "monomer_protein"]:
                 if 'gdt_ts' in result_df.columns:
-                    results[model][target]['gdt-ts'] = calculate_score_avg(result_df, 'gdt_ts',metric_type)
+                    results[model][target]['gdt-ts'] = calculate_score_avg(result_df, 'gdt_ts', metric_type, target_df)
                 elif 'gdt-ts' in result_df.columns:
-                    results[model][target]['gdt-ts'] = calculate_score_avg(result_df, 'gdt-ts',metric_type)
+                    results[model][target]['gdt-ts'] = calculate_score_avg(result_df, 'gdt-ts', metric_type, target_df)
                 if 'tm-score' in result_df.columns:
-                    results[model][target]['tm-score'] = calculate_score_avg(result_df, 'tm-score',metric_type)
+                    results[model][target]['tm-score'] = calculate_score_avg(result_df, 'tm-score', metric_type, target_df)
                 elif 'tm_score' in result_df.columns:
-                    results[model][target]['tm-score'] = calculate_score_avg(result_df, 'tm_score',metric_type)
+                    results[model][target]['tm-score'] = calculate_score_avg(result_df, 'tm_score', metric_type, target_df)
                 
-                results[model][target]['rmsd'] = calculate_score_avg(result_df, 'rmsd',metric_type)
-                results[model][target]['lddt'] = calculate_score_avg(result_df, 'lddt',metric_type)
+                results[model][target]['rmsd'] = calculate_score_avg(result_df, 'rmsd', metric_type, target_df)
+                results[model][target]['lddt'] = calculate_score_avg(result_df, 'lddt', metric_type, target_df)
         
     return results
 
@@ -213,8 +247,23 @@ if __name__ == "__main__":
     parser.add_argument(
         "--metric_type", required=False, default= "rank", help="rank or best",
     )
+    parser.add_argument(
+        "--abag_scoring",
+        required=False,
+        default="standard_ost_abag",
+        choices=["standard_ost_abag", "antigen_receptor"],
+        help="ABAG scoring raw file to summarize. Defaults to standard OST ABAG.",
+    )
     args = parser.parse_args()
-    results = process_csv_files(args.evaluation_dir,args.target_dir,args.output_path,args.algorithm_names,args.targets,args.metric_type)
+    results = process_csv_files(
+        args.evaluation_dir,
+        args.target_dir,
+        args.output_path,
+        args.algorithm_names,
+        args.targets,
+        args.metric_type,
+        args.abag_scoring,
+    )
     
     for target in args.targets:
         for metric in target_metrics_summary[target].keys():

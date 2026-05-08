@@ -1,10 +1,11 @@
 name: foldbench
 channels:
   - conda-forge
+  - bioconda
   - aivant
 dependencies:
-  - python=3.9.*
-  - aivant::openstructure=2.8.0
+  - python=3.10.*
+  - bioconda::openstructure=2.11.1
   - pip:
     - scipy
     - networkx
